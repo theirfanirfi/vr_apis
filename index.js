@@ -1,7 +1,10 @@
 const express = require('express');
 const app = express();
+const connectDatabase = require('./config');
 
 require('dotenv').config();
+
+connectDatabase(process.env.MONGODB_URL);
 
 const router = require('./apis/v1/');
 

@@ -1,8 +1,12 @@
 const express = require('express');
-
 const router = express.Router();
 
-router.use('/user/', (req, res) => {res.send('Welcome')})
+//importing routers
+const userRouter = require('./user/');
+
+
+//registering routers to respective root endpoints
+router.use('/user/', userRouter)
 
 
 

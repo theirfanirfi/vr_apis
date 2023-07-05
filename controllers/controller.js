@@ -9,3 +9,5 @@ class Controller {
     validate_input = () => {}
 
 }
+
+module.exports = Controller;
