@@ -5,13 +5,13 @@ class UserService extends Service {
     
     static create = async (userObject) => {
         let user= new User(userObject);
-        await user.save();
-        console.log(user);
+        user = await user.save();
+        return user ? user : false;
     }
 
     static update = async (userObject) => {
         let user= new User(userObject);
-        await user.save();
+        user = await user.save();
         console.log(user);
     }
 }

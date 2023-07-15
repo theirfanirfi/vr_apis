@@ -17,6 +17,10 @@ let UserEntity = {
         type: String,
         required: true,
     },
+    phone: {
+        type: String,
+        required: true,
+    },
     is_verified: {
         type: Boolean,
         required: true,

@@ -1,10 +1,13 @@
 const express = require('express');
 const app = express();
 const connectDatabase = require('./config');
+const bodyParser = require('body-parser');
 
 require('dotenv').config();
 
 connectDatabase(process.env.MONGODB_URL);
+
+app.use(bodyParser.json());
 
 const router = require('./apis/v1/');
 
