@@ -1,25 +1,47 @@
+const mongoose = require('mongoose');
 let UserEntity = {
+    // id: {
+    //     type: mongoose.Types.ObjectId(),
+    //     required: true,
+    // },
     name: {
         type: String,
         required: true
     },
     email: {
         type: String,
-        required: true,
+        required: false,
         lowercase: true
+    },
+    profile_image: {
+        type: String,
+        required: false,
+    },
+    profile_description: {
+        type: String,
+        required: false,
     },
     username: {
         type: String,
         required: true,
-        lowercase: true
+        lowercase: true,
+        unique: true,
     },
     password: {
+        type: String,
+        required: true,
+    },
+    country_code: {
         type: String,
         required: true,
     },
     phone: {
         type: String,
         required: true,
+    },
+    token: {
+        type: String,
+        required: false,
     },
     is_verified: {
         type: Boolean,

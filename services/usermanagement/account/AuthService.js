@@ -5,12 +5,15 @@ dotenv.config();
 class AuthService extends Service {
 
     static generateToken = (user) => {
+        console.log(user);
         return jwt.sign({
-            id: user._id,
+            id: user._id.toString(),
             name: user.name,
             username: user.username,
             email: user.email,
-        }, process.env.SECRET_KEY, { expiresIn: '1800s' });
+        }, process.env.SECRET_KEY); 
+        
+        // { expiresIn: '1800s' });
     }
 
     static authenticateToken = async (headers) => {
@@ -26,9 +29,17 @@ class AuthService extends Service {
             res= response;
         });
 
-        console.log(res);
 
         return res;
+    }
+
+    static generate_opt = () =>{
+        let num = (Math.floor(Math.random() * 10000) + 10000)
+        return num.toString().substring(1);
+    }
+
+    static verify_password = (user_entered_password, db_user_password) => {
+        return user_entered_password === db_user_password ? true : false;
     }
 }
 
