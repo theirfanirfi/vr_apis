@@ -12,6 +12,12 @@ class UserController extends Controller {
         res.status(200).json({status: true});
     }
 
+    static get_user = async (req, res) => {
+        let {username} = req.params;
+        let user = await UserService.getUser(username);
+        res.status(200).json({status: user});
+    }
+
     static create = async (req, res) => {
         let user = req.body;
         if(UserController.valiate_user_obj_for_required_params(user)){

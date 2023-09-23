@@ -1,11 +1,13 @@
+const mongoose = require('mongoose');
+
 let FollowEntity = {
-    follower_id: {
-        type: String,
-        required: true
+    follower: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
     },
     followed_id: {
-        type: String,
-        required: true,
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
     },
     created_at: {
         type: Date,
