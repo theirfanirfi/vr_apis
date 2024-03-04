@@ -1,7 +1,14 @@
 const User = require('../../models/user_model');
 
 class ProfileService {
-    static getUserProfile = async (user_name, loggedInUserId) => {
+    static getUserProfile = async (user_name, user) => {
+      let loggedInUserId = user.id;
+      if(user_name == "self"){
+        user_name = user.username;
+      }
+
+
+
         try {
           const result = await User.aggregate([
             {
@@ -37,10 +44,13 @@ class ProfileService {
                 email: 1,
                 created_at: 1,
                 updated_at: 1,
-                isMyProfile: { $eq: ['$_id', loggedInUserId] },
+                isMyProfile: { $eq: ['$username', user.username] },
                 // Add other user fields you want to include
                 followers: { $size: '$followers' },
                 following: { $size: '$following' },
+                isFollowing: {
+                  $in: [loggedInUserId, '$followers.follower'],
+                },
                 voiceRecords: { $size: '$voiceRecords' },
                 // voiceRecordsList: '$voiceRecords',
               },

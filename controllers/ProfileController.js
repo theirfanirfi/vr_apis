@@ -12,7 +12,8 @@ class ProfileController extends Controller {
 
     static get = async (req, res) => {
         let username = req.params.username;
-        let profile = await ProfileService.getUserProfile(username, req.user.id);
+        console.log('user', req.user);
+        let profile = await ProfileService.getUserProfile(username, req.user);
         console.log('profile', profile);
         res.status(200).json({status: true, profile: profile});
     }

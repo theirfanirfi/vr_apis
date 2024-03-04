@@ -7,6 +7,7 @@ const authRouter = require('./auth/');
 const voiceRouter = require('./voice/');
 const conversationRouter = require('./conversation/');
 const profileRouter = require('./profile/');
+const followRouter = require('./follow/');
 
 
 //registering routers to respective root endpoints
@@ -15,6 +16,7 @@ router.use('/auth/', authRouter)
 router.use('/voice/', voiceRouter)
 router.use('/conversation/', conversationRouter)
 router.use('/profile/', profileRouter);
+router.use('/follow/', followRouter);
 
 
 

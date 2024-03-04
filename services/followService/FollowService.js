@@ -1,30 +1,54 @@
-const Follow = require('../../models/');
+const Follower = require('../../models/follow_model');
+const User = require('../../models/user_model');
 
 class FollowerService {
-  async followUser(userId, targetUserId) {
+  static followUnFollowUser = async (userId, username) => {
+
+    let user_to_be_followed = await User.findOne({username: username});
+
+    if(user_to_be_followed){
+      // console.log("User to be followed", user_to_be_followed);
     try {
       // Check if the relationship already exists
-      const existingRelationship = await Follow.findOne({
+      const existingRelationship = await Follower.findOne({
         follower: userId,
-        followed_id: targetUserId,
+        followed_id: user_to_be_followed._id,
       });
 
+      console.log('existingRelationship', existingRelationship);
       if (existingRelationship) {
-        return { message: 'Already following this user.' };
-      }
+        let deletedRelationship = await Follower.findOneAndDelete({
+          follower: userId,
+          followed_id: user_to_be_followed._id,
+        });
 
+        if(deletedRelationship){
+          return { status: 200, isFollowed: false, isUnFollowed: true,  message: 'User is unfollowed.' };
+
+        }else {
+          return {status: 501, isFollowed: false,isUnFollowed: false,  message: 'Action could not be performed. Please try again.'  }
+        }
+      }else {
       // Create a new follow relationship
-      const follow = new Follow({
+      const follow = new Follower({
         follower: userId,
-        followed_id: targetUserId,
+        followed_id: user_to_be_followed._id,
       });
 
       await follow.save();
 
-      return { message: 'User followed successfully.' };
+      return { status: 200, isFollowed: true, isUnFollowed: false,  message: 'User followed.' };
+      }
+
+
     } catch (error) {
-      throw new Error(`Error following user: ${error.message}`);
+      return {status: 501, isFollowed: false,isUnFollowed: false,  message: 'Action could not be performed. Please try again.'  }
+
     }
+  }else {
+    return {status: 501, isFollowed: false,isUnFollowed: false,  message: 'Action could not be performed. Please try again.'  }
+
+  }
   }
 
   async unfollowUser(userId, targetUserId) {

@@ -4,17 +4,16 @@ const AuthService = require("../services/usermanagement/account/AuthService");
 
 class AuthController extends Controller {
     static required_params = ['password', 'username']
+
     static valiate_user_obj_for_required_params = (user) => {
         return AuthController.required_params.every(val => user[val] != undefined && user[val] != "")
     }
 
     static index = async (req, res) => {
-        console.log(req.path);
         res.status(200).json({status: true});
     }
 
     static signin = async (req, res) => {
-
         let user = req.body;
         if(AuthController.valiate_user_obj_for_required_params(user)){
 
